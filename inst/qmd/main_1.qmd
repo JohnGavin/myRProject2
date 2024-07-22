@@ -2,6 +2,8 @@
 title: "my-website"
 ---
 
+# First {.section}
+
 ## TODOS
 + qmd yaml to convert this page to dashboard!
 + **adding a .nojekyll file to root of source**
@@ -39,3 +41,40 @@ title: "my-website"
 
 ## Notes
 To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+# Versions {.section}
+
+## Column {.tabset}
+
+### R Version
+
+```{r}
+#| echo: false
+R.version.string
+```
+
+### Python Version
+
+```{python}
+#| echo: false
+import sys
+print(sys.version)
+```
+
+## Row {.tabset}
+
+### Sample Plot
+
+```{r}
+#| echo: false
+plot(cars)
+```
+
+### Sample Table
+
+```{python}
+#| echo: false
+import pandas as pd
+df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+print(df)
+```
