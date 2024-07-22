@@ -11,21 +11,21 @@
     "href": "inst/qmd/main_1.html",
     "title": "my-website",
     "section": "",
-    "text": "qmd yaml to convert this page to dashboard!\nadding a .nojekyll file to root of source\n\nbranch will bypass the Jekyll build process\nand deploy the content directly\ne.g. if GitHub Actions is unavailable/disabled"
+    "text": "qmd yaml to convert this page to dashboard!\nadding a .nojekyll file to root of source\n\nbranch will bypass the Jekyll build process\nand deploy the content directly\ne.g. if GitHub Actions is unavailable/disabled\n\nhttps://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#about-publishing-sources\n\n“if not dedicated branch to hold compiled static files\nsource folder =\n\nroot of the repository (/) on the source branch or\n=&gt; write GH Actions workflow to publish site.”\n/docs folder on the source branch."
   },
   {
     "objectID": "inst/qmd/main_1.html#todos",
     "href": "inst/qmd/main_1.html#todos",
     "title": "my-website",
     "section": "",
-    "text": "qmd yaml to convert this page to dashboard!\nadding a .nojekyll file to root of source\n\nbranch will bypass the Jekyll build process\nand deploy the content directly\ne.g. if GitHub Actions is unavailable/disabled"
+    "text": "qmd yaml to convert this page to dashboard!\nadding a .nojekyll file to root of source\n\nbranch will bypass the Jekyll build process\nand deploy the content directly\ne.g. if GitHub Actions is unavailable/disabled\n\nhttps://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#about-publishing-sources\n\n“if not dedicated branch to hold compiled static files\nsource folder =\n\nroot of the repository (/) on the source branch or\n=&gt; write GH Actions workflow to publish site.”\n/docs folder on the source branch."
   },
   {
     "objectID": "inst/qmd/main_1.html#website",
     "href": "inst/qmd/main_1.html#website",
     "title": "my-website",
     "section": "Website",
-    "text": "Website\n\nquarto render –output-dir my_custom_dir\n\nquarto render –output-dir docs\n\n_site - default rendered website\n\n**FAILS: GH Pages from /docs to /_site**\npreview the website locally\n\n\n\n./_quarto.yml\n\ninsert inst/qmd/\n\n  navbar:\n    left:\n      - href: inst/qmd/main_1.qmd\n        text: Home\n      - inst/qmd/about.qmd\n\n\nstyles.css\n\nmove to top folder?"
+    "text": "Website\n\nquarto publish\n\nInf loop?\n\n‘Deploying gh-pages branch to website …’\n\n\nquarto render –output-dir docs\n_site - default rendered website\n\n**FAILS: GH Pages from /docs to /_site**\npreview the website locally\n\n\n\n./_quarto.yml\n\ninsert inst/qmd/\n\n  navbar:\n    left:\n      - href: inst/qmd/main_1.qmd\n        text: Home\n      - inst/qmd/about.qmd\n\n\nstyles.css\n\nmove to top folder?"
   },
   {
     "objectID": "inst/qmd/main_1.html#notes",

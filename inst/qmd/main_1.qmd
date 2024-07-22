@@ -16,8 +16,10 @@ title: "my-website"
     + /docs folder on the source branch.
 
 ## Website 
-+ quarto publish 
-+ quarto render --output-dir docs
++ **quarto publish**
+  + Inf loop?
+    + 'Deploying gh-pages branch to website ...'
++ **quarto render --output-dir docs**
 + _site - default rendered website 
     + **FAILS: GH Pages from /docs to /_site**
     + preview the website locally

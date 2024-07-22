@@ -154,15 +154,29 @@ ul.task-list li input[type="checkbox"] {
 <li>and deploy the content directly</li>
 <li>e.g.&nbsp;if GitHub Actions is unavailable/disabled</li>
 </ul></li>
+<li>https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#about-publishing-sources
+<ul>
+<li>“if not dedicated branch to hold compiled static files</li>
+<li>source folder =
+<ul>
+<li>root of the repository (/) on the source branch or</li>
+<li>=&gt; write GH Actions workflow to publish site.”</li>
+<li>/docs folder on the source branch.</li>
+</ul></li>
+</ul></li>
 </ul>
 </section>
 <section id="website" class="level2">
 <h2 class="anchored" data-anchor-id="website">Website</h2>
 <ul>
-<li>quarto render –output-dir my_custom_dir
+<li><strong>quarto publish</strong>
 <ul>
-<li>quarto render –output-dir docs</li>
+<li>Inf loop?
+<ul>
+<li>‘Deploying gh-pages branch to website …’</li>
 </ul></li>
+</ul></li>
+<li>quarto render –output-dir docs</li>
 <li>_site - default rendered website
 <ul>
 <li>**FAILS: GH Pages from /docs to /_site**</li>
