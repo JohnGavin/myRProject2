@@ -8,8 +8,9 @@ title: "my-website"
 ## Website 
 
 + quarto render --output-dir my_custom_dir
+  + quarto render --output-dir docs
 + _site - default rendered website 
-    + **update GH Pages from /docs to /_site**
+    + **FAILS: GH Pages from /docs to /_site**
     + preview the website locally
 
 ### `./_quarto.yml`
