@@ -4,6 +4,10 @@ title: "my-website"
 
 ## TODOS
 + qmd yaml to convert this page to dashboard!
++ **adding a .nojekyll file to root of source**
+  + branch will bypass the Jekyll build process
+  + and deploy the content directly
+  + e.g. if GitHub Actions is unavailable/disabled
 
 ## Website 
 

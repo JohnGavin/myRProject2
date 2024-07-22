@@ -11,14 +11,14 @@
     "href": "inst/qmd/main_1.html",
     "title": "my-website",
     "section": "",
-    "text": "qmd yaml to convert this page to dashboard!"
+    "text": "qmd yaml to convert this page to dashboard!\nadding a .nojekyll file to root of source\n\nbranch will bypass the Jekyll build process\nand deploy the content directly\ne.g. if GitHub Actions is unavailable/disabled"
   },
   {
     "objectID": "inst/qmd/main_1.html#todos",
     "href": "inst/qmd/main_1.html#todos",
     "title": "my-website",
     "section": "",
-    "text": "qmd yaml to convert this page to dashboard!"
+    "text": "qmd yaml to convert this page to dashboard!\nadding a .nojekyll file to root of source\n\nbranch will bypass the Jekyll build process\nand deploy the content directly\ne.g. if GitHub Actions is unavailable/disabled"
   },
   {
     "objectID": "inst/qmd/main_1.html#website",
