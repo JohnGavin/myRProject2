@@ -2,18 +2,15 @@ project:
   type: website
 
 website:
-  title: "my-website"
+  title: "myRProject2"
   navbar:
     left:
-      - href: index.qmd
+      - href: inst/qmd/main_1.qmd
         text: Home
-      - about.qmd
+      - inst/qmd/about.qmd
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
-
-
-

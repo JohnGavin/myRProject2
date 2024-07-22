@@ -1,0 +1,29 @@
+---
+title: "my-website"
+---
+
+## TODOS
++ qmd yaml to convert this page to dashboard!
+
+## Website 
+
++ quarto render --output-dir my_custom_dir
++ _site - default rendered website 
+    + **update GH Pages from /docs to /_site**
+    + preview the website locally
+
+### `./_quarto.yml`
++ insert `inst/qmd/` 
+```
+  navbar:
+    left:
+      - href: inst/qmd/main_1.qmd
+        text: Home
+      - inst/qmd/about.qmd
+```
+
+### `styles.css`
++ move to top folder?
+
+## Notes
+To learn more about Quarto websites visit <https://quarto.org/docs/websites>.

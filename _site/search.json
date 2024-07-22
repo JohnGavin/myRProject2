@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "inst/qmd/about.html",
+    "href": "inst/qmd/about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "inst/qmd/main_1.html",
+    "href": "inst/qmd/main_1.html",
+    "title": "my-website",
+    "section": "",
+    "text": "qmd yaml to convert this page to dashboard!"
+  },
+  {
+    "objectID": "inst/qmd/main_1.html#todos",
+    "href": "inst/qmd/main_1.html#todos",
+    "title": "my-website",
+    "section": "",
+    "text": "qmd yaml to convert this page to dashboard!"
+  },
+  {
+    "objectID": "inst/qmd/main_1.html#website",
+    "href": "inst/qmd/main_1.html#website",
+    "title": "my-website",
+    "section": "Website",
+    "text": "Website\n\nquarto render –output-dir my_custom_dir\n_site - default rendered website\n\n**update GH Pages from /docs to /_site**\npreview the website locally\n\n\n\n./_quarto.yml\n\ninsert inst/qmd/\n\n  navbar:\n    left:\n      - href: inst/qmd/main_1.qmd\n        text: Home\n      - inst/qmd/about.qmd\n\n\nstyles.css\n\nmove to top folder?"
+  },
+  {
+    "objectID": "inst/qmd/main_1.html#notes",
+    "href": "inst/qmd/main_1.html#notes",
+    "title": "my-website",
+    "section": "Notes",
+    "text": "Notes\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  }
+]
