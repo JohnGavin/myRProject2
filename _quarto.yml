@@ -10,7 +10,17 @@ website:
       - inst/qmd/about.qmd
 
 format:
-  html:
+  # html:
+  #   theme: cosmo
+  #   css: styles.css
+  #   toc: true
+  dashboard:
+    orientation: columns
     theme: cosmo
-    css: styles.css
-    toc: true
+    nav-buttons: [github, twitter]
+
+page-layout: custom
+toc: true
+
+execute:
+  echo: true
