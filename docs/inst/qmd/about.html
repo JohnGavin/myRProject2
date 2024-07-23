@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About – myRProject2</title>
+<title>Notes – myRProject2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -101,11 +101,15 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../../inst/qmd/duckdb_csv.zip_url.html"> 
+<span class="menu-text">duckdb_csv.zip_url</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="../../inst/qmd/about.html" aria-current="page"> 
-<span class="menu-text">About</span></a>
+<span class="menu-text">Notes</span></a>
   </li>  
 </ul>
-          <div class="quarto-dashboard-links"><a class="quarto-dashboard-link" href="https://github.com/JohnGavin/myRProject2/" title="GitHub"><i class="bi bi-github"></i></a><a class="quarto-dashboard-link" href="https://twitter.com/intent/tweet?url=|url|&amp;text=About" title="Twitter"><i class="bi bi-twitter"></i></a></div></div> <!-- /navcollapse -->
+          <div class="quarto-dashboard-links"><a class="quarto-dashboard-link" href="https://github.com/JohnGavin/myRProject2/" title="GitHub"><i class="bi bi-github"></i></a><a class="quarto-dashboard-link" href="https://twitter.com/intent/tweet?url=|url|&amp;text=Notes" title="Twitter"><i class="bi bi-twitter"></i></a></div></div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
@@ -113,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="quarto-dashboard-header">
 <nav class="navbar navbar-expand-md slim" data-bs-theme="dark">
   <div class="navbar-container container-fluid">
-    <button class="navbar-toggler hidden" type="button" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-controls="dashboard-collapse" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-controls="dashboard-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>    
 
@@ -121,33 +125,77 @@ ul.task-list li input[type="checkbox"] {
     <div class="navbar-brand-container">       
 
       <div class="navbar-title">
-        <div class="navbar-title-text"><a href="#">About</a></div>
+        <div class="navbar-title-text"><a href="#">Notes</a></div>
         
         
       </div>
     </div>
-</div>
+<div id="dashboard-collapse" class="navbar-collapse collapse"><ul class="navbar-nav navbar-nav-scroll me-auto" role="tablist"><li class="nav-item" role="presentation"><a id="tab-second" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#second" data-scrolling="false" href="#second" aria-controls="second" aria-selected="true"><span class="nav-link-text">Second</span></a></li></ul></div></div>
 </nav>
 </header></header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-layout-custom page-navbar quarto-dashboard-content bslib-gap-spacing html-fill-container bslib-page-fill">
+<div id="quarto-content" class="quarto-container page-layout-custom page-navbar quarto-dashboard-content bslib-gap-spacing html-fill-container bslib-page-fill quarto-dashboard-pages">
 <!-- sidebar -->
 <!-- margin-sidebar -->
 <!-- main -->
 
-<div class="bslib-grid-item html-fill-item bslib-grid" data-layout="fill" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+<div class="bslib-grid-item html-fill-item tab-content bslib-grid" data-layout="fill" style="display: grid; grid-template-columns: minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
-<div class="card bslib-card html-fill-container" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div id="second" class="dashboard-page tab-pane show active html-fill-item html-fill-container" data-orientation="columns" aria-labelledby="tab-second">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
 <div class="card-body html-fill-item html-fill-container">
-<p>About this site</p>
+<ul>
+<li><strong>quarto render –output-dir docs</strong></li>
+<li>_site - default rendered website
+<ul>
+<li>**FAILS: GH Pages from /docs to /_site**</li>
+<li>preview the website locally</li>
+</ul></li>
+<li><strong>quarto publish</strong>
+<ul>
+<li>Inf loop?
+<ul>
+<li>‘Deploying gh-pages branch to website …’</li>
+</ul></li>
+</ul></li>
+<li><code>./_quarto.yml</code>
+<ul>
+<li>convert this page to dashboard!</li>
+</ul></li>
+<li><strong>adding a <code>.nojekyll</code> file to root of source</strong>
+<ul>
+<li>branch will bypass the Jekyll build process</li>
+<li>and deploy the content directly</li>
+<li>e.g.&nbsp;if GitHub Actions is unavailable/disabled</li>
+</ul></li>
+<li>https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#about-publishing-sources
+<ul>
+<li>“if not dedicated branch to hold compiled static files</li>
+<li>source folder =
+<ul>
+<li>root of the repository (/) on the source branch or</li>
+<li>=&gt; write GH Actions workflow to publish site.”</li>
+<li>/docs folder on the source branch.</li>
+</ul></li>
+</ul></li>
+</ul>
 </div>
 <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
     <template>Expand</template>
     <span class="bslib-full-screen-enter badge rounded-pill">
         <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
     </span>
-</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div id="3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9" class="hidden">
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
 
+
+<div id="3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9" class="hidden html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
 </div>
 </div>
 

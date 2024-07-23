@@ -5,26 +5,6 @@ title: "my-website"
 # First {.section}
 
 ## TODOS
-+ qmd yaml to convert this page to dashboard!
-+ **adding a .nojekyll file to root of source**
-  + branch will bypass the Jekyll build process
-  + and deploy the content directly
-  + e.g. if GitHub Actions is unavailable/disabled
-+ https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#about-publishing-sources
-  + "if not dedicated branch to hold compiled static files
-  + source folder = 
-    + root of the repository (/) on the source branch or 
-    + => write GH Actions workflow to publish site."
-    + /docs folder on the source branch.
-
-## Website 
-+ **quarto publish**
-  + Inf loop?
-    + 'Deploying gh-pages branch to website ...'
-+ **quarto render --output-dir docs**
-+ _site - default rendered website 
-    + **FAILS: GH Pages from /docs to /_site**
-    + preview the website locally
 
 ### `./_quarto.yml`
 + insert `inst/qmd/` 
@@ -47,19 +27,24 @@ To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 ## Column {.tabset}
 
 ### R Version
-
+<!--
 ```{r}
 #| echo: false
-R.version.string
+# R.version.string
 ```
 
+--->
 ### Python Version
+<!--
 
 ```{python}
 #| echo: false
 import sys
 print(sys.version)
 ```
+-->
+<!--
+
 
 ## Row {.tabset}
 
@@ -78,3 +63,4 @@ import pandas as pd
 df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
 print(df)
 ```
+-->

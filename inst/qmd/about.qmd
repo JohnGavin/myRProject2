@@ -1,5 +1,26 @@
 ---
-title: "About"
+title: "Notes"
 ---
 
-About this site
+# Second {.section}
+
+## Website 
++ **quarto render --output-dir docs**
++ _site - default rendered website 
+    + **FAILS: GH Pages from /docs to /_site**
+    + preview the website locally
++ **quarto publish**
+  + Inf loop?
+    + 'Deploying gh-pages branch to website ...'
++ `./_quarto.yml` 
+  +  convert this page to dashboard!
++ **adding a `.nojekyll` file to root of source**
+  + branch will bypass the Jekyll build process
+  + and deploy the content directly
+  + e.g. if GitHub Actions is unavailable/disabled
++ https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#about-publishing-sources
+  + "if not dedicated branch to hold compiled static files
+  + source folder = 
+    + root of the repository (/) on the source branch or 
+    + => write GH Actions workflow to publish site."
+    + /docs folder on the source branch.

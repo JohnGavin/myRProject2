@@ -1,0 +1,10 @@
+file: 7c573941dc7c161f5d3f8816dccb1b3b.rds
+file_size: 12287466
+pin_hash: d5983450b3acd008
+type: rds
+title: '7c573941dc7c161f5d3f8816dccb1b3b: a pinned 420451 x 15 data frame'
+description: ~
+tags: ~
+urls: ~
+created: 20240723T093238Z
+api_version: 1

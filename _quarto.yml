@@ -7,7 +7,10 @@ website:
     left:
       - href: inst/qmd/main_1.qmd
         text: Home
-      - inst/qmd/about.qmd
+      - href: inst/qmd/duckdb_csv.zip_url.qmd
+        text: duckdb_csv.zip_url
+      - href: inst/qmd/about.qmd
+        text: Notes
 
 format:
   # html:
