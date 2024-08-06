@@ -3,8 +3,8 @@ title: "Untitled"
 format: html
 ---
 
-# data chain 
-+ simple architecture and design.
+# data chain
++ simple architecture and design.`
 + good local development environment.
 + good orchestration and dependency management tool.
 + testing code and pipelines before release.
