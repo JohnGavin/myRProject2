@@ -1,0 +1,214 @@
+---
+params:
+    source_url: "https://www.quantitativo.com/p/playing-with-the-universe"
+title: "Untitled"
+format: html
+---
+
+# First {.section}
+
+## TODOS
+
+### `libraries`
+
+```{r}
+pacman::p_load(
+  tidyverse,
+  tidyquant, 
+  TTR,
+  lubridate,
+  tictoc
+)
+
+### functions
+```{r}
+#' @title 2-day RSI
+calculate_rsi <- function(df) {
+  df %>%
+    group_by(symbol) %>%
+    arrange(date) %>%
+    mutate(rsi = RSI(close, n = 2)) %>%
+    ungroup()
+}
+
+#' @title Normalized ATR
+#' @description 14-day Normalized Average True Range (NATR) for each stock.
+calculate_natr <- function(df) {
+    numeric_cols <- names(df)[sapply(df, is.numeric)]
+    # Rename numeric column names to CamelCase
+    df %>%
+    rename_with(~ tools::toTitleCase(.), .cols = all_of(numeric_cols)) |> 
+    arrange(date) %>%
+    group_by(symbol) %>%
+    mutate(
+      atr = select(High, Low, Close) |> ATR(n = 14) , # |> pull('atr'),
+      # natr = (atr / close) * 100
+    ) 
+ 
+   # as.xts() |> 
+    try.xts(error = as.matrix) |>
+    TR()
+
+
+        ATR(n = 14)
+  df %>%
+    group_by(symbol) %>%
+    arrange(date) %>%
+    mutate(
+      atr = ATR(igh, low, close, n = 14)[, "atr"],
+      # natr = (atr / close) * 100
+    ) %>%
+    ungroup()
+}
+
+#' @title entry signals
+#' @description Generates entry signals based on the RSI < 5 condition.
+generate_entry_signals <- function(df) {
+  df %>%
+    group_by(symbol) %>%
+    arrange(date) %>%
+    mutate(entry_signal = lag(rsi < 5)) %>%
+    ungroup()
+}
+
+#' @title exit signals
+#' @description Generates exit signals when the closing price is above the previous day's high.
+generate_exit_signals <- function(df) {
+  df %>%
+    group_by(symbol) %>%
+    arrange(date) %>%
+    mutate(exit_signal = close > lag(high)) %>%
+    ungroup()
+}
+
+#' @title simulate trading
+#' @description Splitting capital into 10 slots
+#' Ranking stocks by NATR
+#'   (14-day Normalized Average True Range (NATR))
+#' and selecting the top 10
+#' Calculating shares to buy, entry and exit costs
+#'   (including 1 bps slippage each way)
+#' Calculating profit/loss for each trade
+simulate_trading <- function(df, initial_capital) {
+  capital_per_slot <- initial_capital / 10
+
+  df %>%
+    arrange(date) %>%
+    group_by(date) %>%
+    mutate(
+      rank = if_else(entry_signal, rank(-natr), NA_real_),
+      trade = if_else(rank <= 10 & !is.na(rank), TRUE, FALSE),
+      shares = if_else(trade, floor(capital_per_slot / open), 0),
+      entry_cost = if_else(trade, shares * open * 1.0001, 0), # 1 bps slippage
+      exit_cost = if_else(lag(trade) & exit_signal, lag(shares) * open * 0.9999, 0), # 1 bps slippage
+      pnl = if_else(lag(trade) & exit_signal, exit_cost - lag(entry_cost), 0)
+    ) %>%
+    ungroup()
+}
+
+#' @title Main - run the strategy
+run_strategy <- function(df, initial_capital) {
+  df %>%
+    calculate_rsi() %>%
+    calculate_natr() %>%
+    generate_entry_signals() %>%
+    generate_exit_signals() %>%
+    simulate_trading(initial_capital)
+}
+```
+
+### NASDAQ Data
+
+```{r}
+
+# TODO: Nasdaq-100 constituents?
+get_index_symbols <- function(
+    # "NASDAQ 100"?
+    index = tq_index_options()[1]) {
+  tq_index(index) %>%
+    pull(symbol)
+}
+# FIXME: Manual list of Nasdaq-100 constituents (as of a recent date)
+get_nasdaq100_symbols <- c(
+  "AAPL", "MSFT", "AMZN", "NVDA", "GOOGL", "META", "TSLA", "GOOG", "AVGO", "PEP",
+  "COST", "ADBE", "CSCO", "TMUS", "CMCSA", "TXN", "NFLX", "QCOM", "AMD", "INTC",
+  "INTU", "AMAT", "PYPL", "BKNG", "HON", "SBUX", "ISRG", "ADP", "GILD", "ADI",
+  "MDLZ", "REGN", "VRTX", "FISV", "LRCX", "ATVI", "MU", "CSX", "CHTR", "MAR",
+  "MNST", "PANW", "KLAC", "MRVL", "ABNB", "KDP", "KHC", "AEP", "ORLY", "CTAS",
+  "FTNT", "ADSK", "NXPI", "PAYX", "EXC", "XEL", "SNPS", "CPRT", "EA", "CDNS",
+  "MCHP", "MRNA", "DXCM", "CTSH", "AZN", "PCAR", "WBA", "ROST", "ODFL", "IDXX",
+  "VRSK", "FAST", "CSGP", "ANSS", "DLTR", "BIIB", "EBAY", "ZS", "SIRI", "JD",
+  "ILMN", "ALGN", "ZM", "TEAM", "WDAY", "LCID", "MTCH", "OKTA", "PDD", "CRWD",
+  "ASML", "SGEN", "DDOG", "CEG", "RIVN", "FANG", "TTD", "GEHC"
+)
+
+# Function to fetch historical data for a list of symbols
+fetch_historical_data <- function(symbols, start_date, end_date) {
+  symbols %>%
+    tq_get(
+      get = "stock.prices",
+      from = start_date,
+      to = end_date
+    ) %>%
+    select(date, symbol, open, high, low, close)
+}
+
+# Example usage
+start_date <- "2020-01-01"
+end_date <- Sys.Date() - days(1) # today() - days(1)
+
+# Main function to get Nasdaq-100 data
+#  TODO: mirai to parallelise
+system.time(
+  nasdaq100_data <-
+    fetch_historical_data(get_nasdaq100_symbols, start_date, end_date)
+)
+nasdaq100_data %>% glimpse()
+
+# Summarise data
+nasdaq100_summary <- nasdaq100_data %>%
+  group_by(symbol) %>%
+  summarise(
+    start_date = min(date),
+    end_date = max(date),
+    trading_days = n_distinct(date),
+    avg_close = mean(close, na.rm = TRUE)
+  )
+nasdaq100_summary
+
+```
+
+
+### Example
+```{r}
+# Example usage (assuming 'nasdaq100_data' is your input data frame):
+# nasdaq100_data should have columns: date, symbol, open, high, low, close
+
+initial_capital <- 1e6L # $1m
+tic("run strategy: nasdaq100_data")
+results <- run_strategy(
+    df = nasdaq100_data, initial_capital)
+toc()
+
+# Summarize results
+summary <- results %>%
+  summarise(
+    total_pnl = sum(pnl, na.rm = TRUE),
+    total_trades = sum(trade, na.rm = TRUE),
+    win_rate = mean(pnl > 0, na.rm = TRUE),
+    avg_profit = mean(pnl[pnl > 0], na.rm = TRUE),
+    avg_loss = mean(pnl[pnl < 0], na.rm = TRUE)
+  )
+
+print(summary)
+
+```
+
+### Notes
+implements the 2 basis points total slippage (1 bps for entry, 1 bps for exit) as specified.
+Some considerations and potential improvements:
+
+Transaction costs: The script currently only accounts for slippage. You might want to add fixed transaction costs if applicable.
+Data quality: Ensure your input data is clean and accounts for stock splits, dividends, etc.
+Realistic capital allocation: The script assumes you can always buy shares with the exact amount of capital per slot. In reality, you might not be able to buy fractional shares.
+Risk management: You might want to add stop-loss or other risk management features.

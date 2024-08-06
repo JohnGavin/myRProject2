@@ -3,6 +3,14 @@ title: "Untitled"
 format: html
 ---
 
+# data chain 
++ simple architecture and design.
++ good local development environment.
++ good orchestration and dependency management tool.
++ testing code and pipelines before release.
++ avoid doing hard tasks.
+
+
 ```{r}
 pacman::p_load(
   tidyverse, httr, duckdb, DBI,
@@ -10,48 +18,87 @@ pacman::p_load(
 )
 
 pin_csv_zip_to_duckdb <- function(
-    url, 
-    table_name, 
-    board_name = "local_cache") {
+    url,
+    table_name,
+    board_name = "data_raw/local_cache") {
   # Create a local pins board for caching
   board <- board_folder(board_name, versioned = TRUE)
 
   # Create a unique name for the pin based on the URL
   pin_name <- digest::digest(url, algo = "md5")
 
-  # Check if the data is already cached
-  if (!pin_exists(board, pin_name)) {
-    # If not cached, download and process the data
-    temp <- tempfile()
-    GET(url, write_disk(temp, overwrite = TRUE))
-
-    # Extract the CSV file (assuming there's only one)
-    csv_file <- unzip(temp, list = TRUE)$Name[1]
-    csv_content <- unzip(temp, csv_file)
-
-    # Read the CSV into a tibble
-    data <- read_csv(csv_content)
-
-    # Cache the data
-    pin_write(board, data, name = pin_name)
-
-    # Clean up
-    unlink(temp)
-    unlink(csv_content)
-  } else {
-    # If cached, read the data from the pin
-    data <- pin_read(board, pin_name)
-  }
-
   # Create an in-memory DuckDB connection
   con <- dbConnect(duckdb::duckdb(), dbdir = ":memory:")
 
-  # Write the data to DuckDB
-  dbWriteTable(con, table_name, data)
+  tryCatch(
+    {
+      # Check if the data is already cached
+      if (!pin_exists(board, pin_name)) {
+        # If not cached, download the ZIP file
+        temp <- tempfile()
+        GET(url, write_disk(temp, overwrite = TRUE))
 
-  return(con)
+        # Extract the CSV file (assuming there's only one)
+        csv_file <- unzip(temp, list = TRUE)$Name[1]
+        csv_path <- unzip(temp, csv_file, exdir = tempdir())
+
+        # Load the CSV directly into DuckDB
+        dbExecute(con, sprintf("CREATE TABLE %s AS SELECT * FROM read_csv_auto('%s', sample_size=-1)", table_name, csv_path))
+
+        # Cache the table schema and file path
+        pin_write(board, list(
+          schema = dbGetQuery(con, sprintf("DESCRIBE %s", table_name)),
+          file_path = csv_path
+        ),
+        name = pin_name
+        )
+
+        # Clean up the temporary ZIP file
+        unlink(temp)
+      } else {
+        # If cached, read the schema and file path from the pin
+        cached_data <- pin_read(board, pin_name)
+
+        # Recreate the table using the cached schema and file path
+        dbExecute(con, sprintf("CREATE TABLE %s AS SELECT * FROM read_csv_auto('%s', sample_size=-1)", table_name, cached_data$file_path))
+      }
+
+      return(con)
+    },
+    error = function(e) {
+      dbDisconnect(con)
+      stop(paste("Error in pin_csv_zip_to_duckdb:", e$message))
+    }
+  )
 }
 
+
+# Usage
+url <- "https://s3.amazonaws.com/keras-datasets/jena_climate_2009_2016.csv.zip"
+table_name <- "climate"
+
+system.time(db_conn <- pin_csv_zip_to_duckdb(url, table_name))
+# db_conn <- import_csv_zip_to_duckdb(url, table_name)
+
+# Query the imported data
+result <- tbl(db_conn, table_name) %>%
+  # head(5) %>%
+  collect()
+
+result
+
+```
+
+```{r close connection}
+dbDisconnect(db_conn)
+```
+
+
+
+```{r}
+#| label: old ignore
+#| eval: false
+#| show: false
 import_csv_zip_to_duckdb <- function(url, table_name) {
   # Download the ZIP file
   temp <- tempfile()
@@ -76,23 +123,4 @@ import_csv_zip_to_duckdb <- function(url, table_name) {
 
   return(con)
 }
-
-# Usage
-url <- "https://s3.amazonaws.com/keras-datasets/jena_climate_2009_2016.csv.zip"
-table_name <- "my_table"
-
-db_conn <- pin_csv_zip_to_duckdb(url, table_name)
-# db_conn <- import_csv_zip_to_duckdb(url, table_name)
-
-# Query the imported data
-result <- tbl(db_conn, table_name) %>%
-  #head(5) %>%
-  collect()
-
-print(result)
-
-```
-
-```{r close connection}
-dbDisconnect(db_conn)
 ```

@@ -19,6 +19,10 @@ title: "Notes"
   + and deploy the content directly
   + e.g. if GitHub Actions is unavailable/disabled
 + https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#about-publishing-sources
+    + publish site when changes are pushed to _specific branch_ (gh_pages). 
+        + specify branch & folder as  publishing source
+            + source  any branch in  repo
+            + source folder = root of repos (/) or /docs folder on source branch, for both
   + "if not dedicated branch to hold compiled static files
   + source folder = 
     + root of the repository (/) on the source branch or 
